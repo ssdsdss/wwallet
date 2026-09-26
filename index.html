@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Telegram Wallet</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="top">
+    <div class="avatar" id="avatar">💎</div>
+    <div class="who">
+      <div class="name" id="uname">Wallet</div>
+      <div class="status" id="vstatus">не верифицирован</div>
+    </div>
+  </header>
+
+  <section class="balance-card">
+    <div class="label">Баланс</div>
+    <div class="amount" id="balance">0.00 $</div>
+    <div class="row-btns">
+      <button class="btn primary" onclick="openSheet('topup')">Пополнить</button>
+      <button class="btn ghost" onclick="openSheet('send')">Перевести</button>
+    </div>
+  </section>
+
+  <section class="actions">
+    <button onclick="openSheet('verify')">✅ Верификация</button>
+    <button onclick="openSheet('history')">📜 История</button>
+    <button onclick="openSheet('support')">💬 Поддержка</button>
+    <button onclick="openSheet('settings')">⚙️ Настройки</button>
+  </section>
+
+  <div class="banner" id="banBanner" hidden>
+    🚫 Кошелёк заблокирован. <a onclick="openSheet('appeal')">Апелляция</a>
+  </div>
+</div>
+
+<!-- bottom sheet -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-inner" id="sheetContent"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

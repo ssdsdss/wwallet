@@ -1,0 +1,67 @@
+:root{
+  --bg:#0f1115; --card:#171a21; --card2:#1e222b;
+  --txt:#e8ecf3; --dim:#8a93a6; --accent:#2ea6ff; --ok:#31c48d; --bad:#ff5c5c;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding:16px;padding-bottom:80px;
+}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.avatar{
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,#2ea6ff,#7b61ff);
+  display:grid;place-items:center;font-size:20px;
+}
+.name{font-weight:600}
+.status{font-size:12px;color:var(--dim)}
+.balance-card{
+  background:linear-gradient(160deg,#1b2230,#12151c);
+  border-radius:20px;padding:22px;margin-bottom:16px;
+  border:1px solid #232a36;
+}
+.label{color:var(--dim);font-size:13px}
+.amount{font-size:40px;font-weight:700;margin:6px 0 18px;letter-spacing:-1px}
+.row-btns{display:flex;gap:10px}
+.btn{
+  flex:1;border:0;border-radius:12px;padding:13px;font-size:15px;
+  font-weight:600;cursor:pointer;color:#fff;
+}
+.btn.primary{background:var(--accent)}
+.btn.ghost{background:#232a36}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions button{
+  background:var(--card);border:1px solid #232a36;color:var(--txt);
+  border-radius:14px;padding:16px;font-size:14px;text-align:left;cursor:pointer;
+}
+.banner{
+  margin-top:16px;background:#3a1a1a;border:1px solid #5c2626;
+  color:#ffb4b4;padding:12px;border-radius:12px;font-size:14px;
+}
+.banner a{color:#ff8080;text-decoration:underline;cursor:pointer}
+.sheet{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);
+  display:flex;align-items:flex-end;z-index:50;
+}
+.sheet-inner{
+  background:var(--card2);width:100%;border-radius:20px 20px 0 0;
+  padding:22px;max-height:80vh;overflow:auto;
+  animation:up .25s ease;
+}
+@keyframes up{from{transform:translateY(100%)}}
+.sheet h3{margin:0 0 14px}
+.sheet input,.sheet select{
+  width:100%;padding:13px;border-radius:12px;border:1px solid #2b3240;
+  background:#12151c;color:var(--txt);margin-bottom:10px;font-size:15px;
+}
+.sheet .primary{width:100%;padding:14px}
+.tx{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #232a36}
+.tx:last-child{border:0}
+.tx .pos{color:var(--ok)} .tx .neg{color:var(--bad)}
+.close{float:right;color:var(--dim);cursor:pointer}
+.spinner{
+  width:44px;height:44px;border:4px solid #2b3240;border-top-color:var(--accent);
+  border-radius:50%;margin:20px auto;animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
