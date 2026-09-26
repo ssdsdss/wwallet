@@ -211,3 +211,4 @@ html,body{
   border-radius:50%;margin:20px auto;animation:spin 1s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+.sheet[hidden]{display:none !important}
