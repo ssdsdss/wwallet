@@ -1,15 +1,20 @@
-app = "wwallet"
-primary_region = "fra"
+# fly.toml app configuration file generated for wwallet-b-cra on 2026-09-26T18:34:54Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'wwallet-b-cra'
+primary_region = 'ams'
 
 [build]
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = 'off'
   auto_start_machines = true
   min_machines_running = 1
 
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "256mb"
+  size = 'shared-cpu-1x'
+  memory = '256mb'
