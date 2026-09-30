@@ -1,1171 +1,682 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+    <meta charset="UTF-8">
 
-  <meta name="theme-color" content="#0b0e14">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    >
 
-  <title>Demo Wallet</title>
+    <meta name="theme-color" content="#0b0e14">
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>DEMO Wallet</title>
 
-  <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ГЛАВНЫЙ ЭКРАН -->
 <div class="app" id="app">
 
-  <!-- TOP -->
-  <header class="topbar">
-
-    <div class="avatar">
-      <svg viewBox="0 0 40 40" width="40" height="40">
-        <circle cx="20" cy="20" r="20" fill="#3a4152"/>
-        <circle cx="20" cy="16" r="6" fill="#cfd4e2"/>
-        <path
-          d="M7 36c2-8 8-12 13-12s11 4 13 12"
-          fill="#cfd4e2"
-        />
-      </svg>
-    </div>
-
-    <div class="title-wrap">
-      <div class="title">Demo Wallet</div>
-      <div class="demo-badge">DEMO</div>
-    </div>
-
-    <button
-      class="icon-btn"
-      data-action="sheet"
-      data-arg="scan"
-      aria-label="Сканировать">
-
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round">
-
-        <path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8"/>
-        <path d="M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8"/>
-        <path d="M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16"/>
-        <path d="M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/>
-
-        <rect
-          x="9.5"
-          y="9.5"
-          width="5"
-          height="5"
-          rx="1"/>
-      </svg>
-    </button>
+    <!-- ================= HEADER ================= -->
+
+    <header class="topbar">
+
+        <div class="avatar">
+            <span>W</span>
+        </div>
+
+        <div class="title">
+            wallet
+        </div>
+
+        <button
+            class="icon-btn"
+            type="button"
+            data-action="sheet"
+            data-arg="scan"
+        >
+            ⋮
+        </button>
+
+    </header>
+
+
+    <!-- ================= BALANCE ================= -->
+
+    <section class="balance">
+
+        <div class="bal-label">
+            Баланс
+        </div>
+
+        <div class="bal-value">
+            <span id="balance">0,00</span>
+            <span class="cur">₴</span>
+        </div>
+
+        <div class="chart">
+            <svg
+                viewBox="0 0 400 80"
+                preserveAspectRatio="none"
+            >
+
+                <defs>
+                    <linearGradient
+                        id="chartGradient"
+                        x1="0"
+                        y1="0"
+                        x2="0"
+                        y2="1"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#24d18b"
+                            stop-opacity=".35"
+                        />
+
+                        <stop
+                            offset="1"
+                            stop-color="#24d18b"
+                            stop-opacity="0"
+                        />
+                    </linearGradient>
+                </defs>
+
+                <path
+                    d="
+                    M0 60
+                    L35 55
+                    L70 58
+                    L105 43
+                    L140 48
+                    L175 37
+                    L210 42
+                    L245 27
+                    L280 32
+                    L315 18
+                    L350 24
+                    L400 10
+                    L400 80
+                    L0 80
+                    Z
+                    "
+                    fill="url(#chartGradient)"
+                />
+
+                <path
+                    d="
+                    M0 60
+                    L35 55
+                    L70 58
+                    L105 43
+                    L140 48
+                    L175 37
+                    L210 42
+                    L245 27
+                    L280 32
+                    L315 18
+                    L350 24
+                    L400 10
+                    "
+                    fill="none"
+                    stroke="#24d18b"
+                    stroke-width="2"
+                />
 
-  </header>
-
-
-  <!-- BALANCE -->
-  <section class="balance">
-
-    <div class="bal-label">
-      Демо-баланс
-    </div>
-
-    <div class="bal-value">
-
-      <span id="balance">
-        0,00
-      </span>
-
-      <span class="cur">
-        ₴
-      </span>
-
-    </div>
-
-    <div id="username" class="username">
-      Пользователь
-    </div>
-
-    <div class="spark">
-
-      <svg
-        viewBox="0 0 300 40"
-        preserveAspectRatio="none"
-        width="100%"
-        height="40">
-
-        <defs>
+            </svg>
+        </div>
 
-          <linearGradient
-            id="sparkg"
-            x1="0"
-            y1="0"
-            x2="0"
-            y2="1">
+        <div class="bal-change">
 
-            <stop
-              offset="0"
-              stop-color="#31c48d"
-              stop-opacity=".35"/>
+            <span
+                class="up"
+                id="changeAbs"
+            >
+                +0,00 ₴
+            </span>
 
-            <stop
-              offset="1"
-              stop-color="#31c48d"
-              stop-opacity="0"/>
+            <span
+                class="pill"
+                id="changePct"
+            >
+                ↑ 0,00%
+            </span>
 
-          </linearGradient>
+            <span class="period">
+                Весь час
+            </span>
 
-        </defs>
+        </div>
 
-        <path
-          d="M0 28 L25 24 L50 26 L75 20 L100 22 L125 16 L150 18 L175 12 L200 14 L225 8 L250 12 L275 6 L300 8 L300 40 L0 40 Z"
-          fill="url(#sparkg)"/>
+    </section>
 
-        <path
-          d="M0 28 L25 24 L50 26 L75 20 L100 22 L125 16 L150 18 L175 12 L200 14 L225 8 L250 12 L275 6 L300 8"
-          fill="none"
-          stroke="#31c48d"
-          stroke-width="1.6"
-          stroke-linejoin="round"/>
 
-      </svg>
+    <!-- ================= PROMO ================= -->
 
-    </div>
+    <section
+        class="promo"
+        data-action="sheet"
+        data-arg="promo"
+    >
 
-    <div class="bal-change">
+        <div class="promo-icon">
+            🎁
+        </div>
 
-      <span class="up" id="changeAbs">
-        +0,00 ₴
-      </span>
+        <div class="promo-text">
 
-      <span class="pill" id="changePct">
-        ↑ 0,00%
-      </span>
+            <div class="promo-title">
+                Візьміть участь, щоб виграти до $100
+            </div>
 
-      <span class="period">
-        Весь час
-      </span>
+            <div class="promo-sub">
+                Винагорода за завершення налаштування
+            </div>
 
-    </div>
+        </div>
 
-  </section>
+        <div class="chev">
+            ›
+        </div>
 
+    </section>
 
-  <!-- PROMO -->
-  <section
-    class="promo"
-    data-action="sheet"
-    data-arg="promo">
 
-    <div class="promo-icon">
+    <!-- ================= QUICK ACTIONS ================= -->
 
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="#fff"
-        stroke-width="1.8"
-        stroke-linejoin="round">
+    <section class="quick">
 
-        <rect
-          x="3"
-          y="8"
-          width="18"
-          height="13"
-          rx="2"/>
+        <button
+            type="button"
+            data-action="sheet"
+            data-arg="send"
+        >
+            <span class="qa-icon">
+                ↗
+            </span>
 
-        <path d="M3 12h18"/>
-        <path d="M12 8v13"/>
+            <span class="qa-label">
+                Переказати
+            </span>
+        </button>
 
-        <path
-          d="M12 8s-2-5-5-5a2.5 2.5 0 0 0 0 5h5z"/>
 
-        <path
-          d="M12 8s2-5 5-5a2.5 2.5 0 0 1 0 5h-5z"/>
+        <button
+            type="button"
+            data-action="sheet"
+            data-arg="topup"
+        >
+            <span class="qa-icon">
+                ＋
+            </span>
 
-      </svg>
+            <span class="qa-label">
+                Поповнити
+            </span>
+        </button>
 
-    </div>
 
-    <div class="promo-text">
+        <button
+            type="button"
+            data-action="sheet"
+            data-arg="withdraw"
+        >
+            <span class="qa-icon">
+                ↑
+            </span>
 
-      <div class="promo-title">
-        Получите бонус до $100
-      </div>
+            <span class="qa-label">
+                Вивести
+            </span>
+        </button>
 
-      <div class="promo-sub">
-        Вознаграждение за настройку Demo Wallet
-      </div>
 
-    </div>
+        <button
+            type="button"
+            data-action="sheet"
+            data-arg="swap"
+        >
+            <span class="qa-icon">
+                ⇄
+            </span>
 
-    <div class="chev">
-      ›
-    </div>
+            <span class="qa-label">
+                Обмін
+            </span>
+        </button>
 
-  </section>
+    </section>
 
 
-  <!-- QUICK ACTIONS -->
-  <section class="quick">
+    <!-- ================= DEMO BANNER ================= -->
 
-    <button
-      class="quick-action"
-      data-action="sheet"
-      data-arg="send"
-      data-title="Перевести">
+    <section class="demo-banner">
 
-      <span class="qa-icon">
+        <div>
 
-        <svg
-          viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          fill="none"
-          stroke="#fff"
-          stroke-width="1.7"
-          stroke-linejoin="round">
+            <div class="demo-title">
+                DEMO Wallet
+            </div>
 
-          <path d="M21 3 3 10.5l7 2.5 2.5 7L21 3z"/>
+            <div class="demo-subtitle">
+                Тестовий режим
+            </div>
 
-        </svg>
+        </div>
 
-      </span>
-
-      <span class="qa-label">
-        Перевести
-      </span>
-
-    </button>
-
-
-    <button
-      class="quick-action"
-      data-action="sheet"
-      data-arg="topup"
-      data-title="Пополнить">
-
-      <span class="qa-icon">
-
-        <svg
-          viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          fill="none"
-          stroke="#fff"
-          stroke-width="1.7"
-          stroke-linecap="round">
-
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 8v8"/>
-          <path d="M8 12h8"/>
-
-        </svg>
-
-      </span>
-
-      <span class="qa-label">
-        Пополнить
-      </span>
-
-    </button>
-
-
-    <button
-      class="quick-action"
-      data-action="sheet"
-      data-arg="withdraw"
-      data-title="Вывести">
-
-      <span class="qa-icon">
-
-        <svg
-          viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          fill="none"
-          stroke="#fff"
-          stroke-width="1.7"
-          stroke-linecap="round">
-
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 16V8"/>
-          <path d="M8 12l4-4 4 4"/>
-
-        </svg>
-
-      </span>
-
-      <span class="qa-label">
-        Вывести
-      </span>
-
-    </button>
-
-
-    <button
-      class="quick-action"
-      data-action="sheet"
-      data-arg="swap"
-      data-title="Обменять">
-
-      <span class="qa-icon">
-
-        <svg
-          viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          fill="none"
-          stroke="#fff"
-          stroke-width="1.7"
-          stroke-linecap="round"
-          stroke-linejoin="round">
-
-          <path d="M4 8h13l-3-3"/>
-          <path d="M20 16H7l3 3"/>
-
-        </svg>
-
-      </span>
-
-      <span class="qa-label">
-        Обменять
-      </span>
-
-    </button>
-
-  </section>
-
-
-  <!-- DEMO BANNER -->
-  <section class="demo-banner">
-
-    <div class="demo-banner-icon">
-      DEMO
-    </div>
-
-    <div>
-      <div class="demo-banner-title">
-        Тестовый кошелёк
-      </div>
-
-      <div class="demo-banner-sub">
-        Все балансы внутри приложения виртуальные
-      </div>
-    </div>
-
-  </section>
-
-
-  <!-- IPO -->
-  <section class="ipo" id="ipoBanner">
-
-    <div class="ipo-left">
-
-      <div class="ipo-timer">
-        Demo Event за
-        <span id="ipoTimer">
-          50:57:01
+        <span class="demo-badge">
+            DEMO
         </span>
-      </div>
 
-      <div class="ipo-cta">
-        Подать заявку
-        <span class="arrow">
-          ›
-        </span>
-      </div>
+    </section>
 
+
+    <!-- ================= ASSETS ================= -->
+
+    <section class="assets-section">
+
+        <div class="section-title">
+            Активи
+        </div>
+
+        <div id="assets"></div>
+
+    </section>
+
+
+    <!-- ================= ADMIN BUTTON ================= -->
+
+    <button
+        id="adminButton"
+        class="admin-open"
+        type="button"
+        data-action="admin"
+        hidden
+    >
+        🛠 Адмін-панель
+    </button>
+
+
+    <!-- ================= TABBAR ================= -->
+
+    <nav class="tabbar">
+
+        <button
+            class="tab active"
+            type="button"
+            data-tab="wallet"
+        >
+            <span>▣</span>
+            <small>Кошелёк</small>
+        </button>
+
+
+        <button
+            class="tab"
+            type="button"
+            data-tab="trade"
+        >
+            <span>⇄</span>
+            <small>Обмін</small>
+        </button>
+
+
+        <button
+            class="tab"
+            type="button"
+            data-tab="profit"
+        >
+            <span>↗</span>
+            <small>Прибуток</small>
+        </button>
+
+
+        <button
+            class="tab"
+            type="button"
+            data-tab="bonus"
+        >
+            <span>🎁</span>
+            <small>Бонуси</small>
+        </button>
+
+    </nav>
+
+
+    <div class="footer-handle">
+        @wallet_vbot
     </div>
-
-    <div class="ipo-right">
-
-      <div class="ipo-badge">
-        DEMO
-      </div>
-
-      <div class="ipo-ring"></div>
-
-    </div>
-
-    <button
-      class="ipo-close"
-      data-action="ipo-close">
-      ✕
-    </button>
-
-    <div class="ipo-dots">
-
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-
-    </div>
-
-  </section>
-
-
-  <!-- ASSETS -->
-  <section
-    class="assets"
-    id="assets">
-  </section>
-
-
-  <!-- ERROR -->
-  <div
-    id="appError"
-    class="app-error"
-    style="display:none;">
-  </div>
-
-
-  <!-- TABBAR -->
-  <nav class="tabbar">
-
-    <button
-      class="tab active"
-      data-tab="wallet">
-
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linejoin="round">
-
-        <rect
-          x="3"
-          y="7"
-          width="18"
-          height="13"
-          rx="2.5"/>
-
-        <path d="M3 10h18"/>
-
-        <circle
-          cx="17"
-          cy="14.5"
-          r="1.2"
-          fill="currentColor"
-          stroke="none"/>
-
-      </svg>
-
-      <span>
-        Кошелёк
-      </span>
-
-    </button>
-
-
-    <button
-      class="tab"
-      data-tab="trade">
-
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round">
-
-        <path d="M4 18 10 12l4 4 6-8"/>
-        <path d="M20 8h-4M20 8v4"/>
-
-      </svg>
-
-      <span>
-        Торговля
-      </span>
-
-    </button>
-
-
-    <button
-      class="tab"
-      data-tab="profit">
-
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round">
-
-        <circle cx="12" cy="13" r="7"/>
-        <path d="M12 9v4l2.5 2.5"/>
-        <path d="M9 3h6"/>
-
-      </svg>
-
-      <span>
-        Прибыль
-      </span>
-
-    </button>
-
-
-    <button
-      class="tab"
-      data-tab="bonus">
-
-      <svg
-        viewBox="0 0 24 24"
-        width="22"
-        height="22"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linejoin="round">
-
-        <path
-          d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 17l-5.2 2.6 1-5.8L3.5 9.7l5.9-.9L12 3.5z"/>
-
-      </svg>
-
-      <span>
-        Бонусы
-      </span>
-
-    </button>
-
-  </nav>
-
-
-  <div class="footer-handle">
-    Demo Wallet
-  </div>
 
 </div>
 
 
-<!-- ========================= -->
-<!-- ЭКРАН БЛОКИРОВКИ -->
-<!-- ========================= -->
+<!-- ================================================= -->
+<!-- BAN SCREEN -->
+<!-- ================================================= -->
 
 <section
-  class="fullscreen"
-  id="screenBan"
-  hidden>
+    class="fullscreen"
+    id="screenBan"
+    hidden
+>
 
-  <div class="fs-inner">
+    <div class="status-card">
 
-    <div class="fs-icon bad">
+        <div class="status-icon danger">
+            !
+        </div>
 
-      <svg
-        viewBox="0 0 24 24"
-        width="48"
-        height="48"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.4"
-        stroke-linecap="round">
+        <h1>
+            Кошелёк заблокирован
+        </h1>
 
-        <circle
-          cx="12"
-          cy="12"
-          r="10"
-          opacity=".3"/>
+        <p>
+            Доступ к DEMO Wallet временно ограничен.
+        </p>
 
-        <path d="M8 12h8"/>
-
-      </svg>
-
-    </div>
-
-
-    <div class="fs-title">
-      Ну всё...
-    </div>
-
-
-    <div class="fs-sub">
-      Ваш аккаунт в Demo Wallet заблокирован.
-    </div>
-
-
-    <div class="fs-reason">
-
-      <b>
-        Причина:
-      </b>
-
-      <span id="banReason">
-        Подозрительная активность
-      </span>
+        <button
+            class="primary-btn"
+            type="button"
+            data-action="appeal"
+        >
+            Подать обращение
+        </button>
 
     </div>
-
-
-    <button
-      id="appealButton"
-      class="fs-btn">
-
-      Подать обращение
-
-    </button>
-
-
-    <div class="support-label">
-      Demo Wallet Support
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- АПЕЛЛЯЦИЯ НА РАССМОТРЕНИИ -->
-<!-- ========================= -->
+<!-- ================================================= -->
+<!-- PENDING -->
+<!-- ================================================= -->
 
 <section
-  class="fullscreen"
-  id="screenPending"
-  hidden>
+    class="fullscreen"
+    id="screenPending"
+    hidden
+>
 
-  <div class="fs-inner">
+    <div class="status-card">
 
-    <div class="fs-clock">
+        <div class="status-icon warning">
+            …
+        </div>
 
-      <svg
-        viewBox="0 0 100 100"
-        width="100"
-        height="100">
+        <h1>
+            Обращение отправлено
+        </h1>
 
-        <circle
-          cx="50"
-          cy="50"
-          r="44"
-          fill="none"
-          stroke="rgba(46,166,255,.2)"
-          stroke-width="2"/>
-
-        <circle
-          cx="50"
-          cy="50"
-          r="44"
-          fill="none"
-          stroke="#2ea6ff"
-          stroke-width="2"
-          stroke-dasharray="276"
-          stroke-linecap="round">
-
-          <animate
-            attributeName="stroke-dashoffset"
-            from="0"
-            to="276"
-            dur="8s"
-            repeatCount="indefinite"/>
-
-        </circle>
-
-        <circle
-          cx="50"
-          cy="50"
-          r="3"
-          fill="#2ea6ff"/>
-
-        <line
-          x1="50"
-          y1="50"
-          x2="50"
-          y2="28"
-          stroke="#2ea6ff"
-          stroke-width="2.5"
-          stroke-linecap="round">
-
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0 50 50"
-            to="360 50 50"
-            dur="4s"
-            repeatCount="indefinite"/>
-
-        </line>
-
-        <line
-          x1="50"
-          y1="50"
-          x2="68"
-          y2="50"
-          stroke="#2ea6ff"
-          stroke-width="2"
-          stroke-linecap="round">
-
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            from="0 50 50"
-            to="360 50 50"
-            dur="24s"
-            repeatCount="indefinite"/>
-
-        </line>
-
-      </svg>
+        <p>
+            Ваше обращение находится на рассмотрении.
+        </p>
 
     </div>
-
-
-    <div class="fs-title">
-      Ожидаем
-    </div>
-
-
-    <div class="fs-sub">
-      Ваше обращение находится на рассмотрении у администрации.
-      <br>
-      Пожалуйста, подождите.
-    </div>
-
-
-    <div class="support-label">
-      Demo Wallet Support
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- АПЕЛЛЯЦИЯ ОТКЛОНЕНА -->
-<!-- ========================= -->
+<!-- ================================================= -->
+<!-- REJECTED -->
+<!-- ================================================= -->
 
 <section
-  class="fullscreen"
-  id="screenRejected"
-  hidden>
+    class="fullscreen"
+    id="screenRejected"
+    hidden
+>
 
-  <div class="fs-inner">
+    <div class="status-card">
 
-    <div class="fs-icon bad">
+        <div class="status-icon danger">
+            ×
+        </div>
 
-      <svg
-        viewBox="0 0 24 24"
-        width="48"
-        height="48"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.4"
-        stroke-linecap="round">
+        <h1>
+            Обращение отклонено
+        </h1>
 
-        <circle
-          cx="12"
-          cy="12"
-          r="10"
-          opacity=".3"/>
-
-        <path d="M8 8l8 8"/>
-        <path d="M16 8l-8 8"/>
-
-      </svg>
+        <p>
+            Повторная подача обращения будет доступна позже.
+        </p>
 
     </div>
-
-
-    <div class="fs-title">
-      Неудача
-    </div>
-
-
-    <div class="fs-sub">
-
-      Ваше обращение отклонено.
-
-      <br>
-
-      Повторная подача обращения будет доступна через 14 дней.
-
-    </div>
-
-
-    <div
-      id="retryDate"
-      class="retry-date">
-    </div>
-
-
-    <div class="support-label">
-      Demo Wallet Support
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- АПЕЛЛЯЦИЯ ОДОБРЕНА -->
-<!-- ========================= -->
+<!-- ================================================= -->
+<!-- APPROVED -->
+<!-- ================================================= -->
 
 <section
-  class="fullscreen"
-  id="screenApproved"
-  hidden>
+    class="fullscreen"
+    id="screenApproved"
+    hidden
+>
 
-  <div class="fs-inner">
+    <div class="status-card">
 
-    <div class="fs-icon ok">
+        <div class="status-icon success">
+            ✓
+        </div>
 
-      <svg
-        viewBox="0 0 24 24"
-        width="48"
-        height="48"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.4"
-        stroke-linecap="round"
-        stroke-linejoin="round">
+        <h1>
+            Доступ восстановлен
+        </h1>
 
-        <circle
-          cx="12"
-          cy="12"
-          r="10"
-          opacity=".3"/>
-
-        <path d="M8 12.5l2.5 2.5L16 9.5"/>
-
-      </svg>
+        <p>
+            Ваше обращение было одобрено.
+        </p>
 
     </div>
-
-
-    <div class="fs-title">
-      Успех!
-    </div>
-
-
-    <div class="fs-sub">
-
-      Ваше обращение принято.
-
-      <br>
-
-      Доступ к Demo Wallet восстановлен.
-
-    </div>
-
-
-    <button
-      class="fs-btn ghost"
-      onclick="location.reload()">
-
-      Продолжить
-
-    </button>
-
-
-    <div class="support-label">
-      Demo Wallet Support
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- ========================= -->
-<!-- ОКНО АПЕЛЛЯЦИИ -->
-<!-- ========================= -->
+<!-- ================================================= -->
+<!-- SHEET -->
+<!-- ================================================= -->
 
 <div
-  class="sheet"
-  id="appealSheet">
+    class="sheet"
+    id="sheet"
+    hidden
+>
 
-  <div class="sheet-inner">
-
-    <button
-      class="close"
-      data-close-sheet>
-      ×
-    </button>
-
-
-    <h3>
-      Обращение
-    </h3>
-
-
-    <div class="sheet-description">
-      Опишите ситуацию и укажите причину,
-      по которой вы считаете блокировку ошибочной.
-    </div>
-
-
-    <textarea
-      id="appealText"
-      rows="5"
-      maxlength="1000"
-      placeholder="Введите текст обращения..."></textarea>
-
-
-    <button
-      id="sendAppeal"
-      class="primary">
-
-      Отправить обращение
-
-    </button>
-
-  </div>
+    <div
+        class="sheet-inner"
+        id="sheetContent"
+    ></div>
 
 </div>
 
 
-<!-- ========================= -->
-<!-- ACTION SHEET -->
-<!-- ========================= -->
+<!-- ================================================= -->
+<!-- ADMIN PANEL -->
+<!-- ================================================= -->
 
-<!-- ========================= -->
-<!-- АДМИН-ПАНЕЛЬ -->
-<!-- ========================= -->
+<div
+    class="admin-panel"
+    id="adminPanel"
+    hidden
+>
 
-<section
-  id="adminPanel"
-  class="admin-panel"
-  style="display:none;">
+    <div class="admin-box">
 
-  <div class="admin-header">
+        <div class="admin-header">
 
-    <div>
+            <h2>
+                🛠 DEMO ADMIN
+            </h2>
 
-      <div class="admin-title">
-        Админ-панель
-      </div>
+            <button
+                type="button"
+                class="sheet-close"
+                data-action="admin-close"
+            >
+                ×
+            </button>
 
-      <div class="admin-subtitle">
-        Управление Demo Wallet
-      </div>
+        </div>
+
+
+        <div class="admin-section">
+
+            <h3>
+                Баланс
+            </h3>
+
+            <input
+                id="adminUid"
+                class="sheet-input"
+                type="number"
+                placeholder="ID пользователя"
+            >
+
+            <input
+                id="adminAmount"
+                class="sheet-input"
+                type="number"
+                step="0.01"
+                placeholder="Сумма"
+            >
+
+            <input
+                id="adminNote"
+                class="sheet-input"
+                placeholder="Примечание"
+            >
+
+            <div class="admin-buttons">
+
+                <button
+                    id="adminAdd"
+                    type="button"
+                    class="primary-btn"
+                >
+                    Добавить
+                </button>
+
+                <button
+                    id="adminTake"
+                    type="button"
+                    class="secondary-btn"
+                >
+                    Снять
+                </button>
+
+                <button
+                    id="adminSet"
+                    type="button"
+                    class="secondary-btn"
+                >
+                    Установить
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-section">
+
+            <h3>
+                Блокировка
+            </h3>
+
+            <input
+                id="adminReason"
+                class="sheet-input"
+                placeholder="Причина блокировки"
+            >
+
+            <div class="admin-buttons">
+
+                <button
+                    id="adminBan"
+                    type="button"
+                    class="danger-btn"
+                >
+                    Заблокировать
+                </button>
+
+                <button
+                    id="adminUnban"
+                    type="button"
+                    class="secondary-btn"
+                >
+                    Разблокировать
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-section">
+
+            <h3>
+                Апелляции
+            </h3>
+
+            <div
+                id="appealsList"
+                class="appeals-list"
+            >
+                Загрузка...
+            </div>
+
+        </div>
+
+
+        <div
+            id="adminAppealView"
+            class="appeal-view"
+            hidden
+        >
+
+            <div
+                id="adminAppealInfo"
+                class="appeal-info"
+            ></div>
+
+            <div
+                id="adminAppealText"
+                class="appeal-text"
+            ></div>
+
+            <div class="admin-buttons">
+
+                <button
+                    id="acceptAppeal"
+                    type="button"
+                    class="primary-btn"
+                    data-action="accept-appeal"
+                >
+                    Одобрить
+                </button>
+
+                <button
+                    id="rejectAppeal"
+                    type="button"
+                    class="danger-btn"
+                    data-action="reject-appeal"
+                >
+                    Отклонить
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
-
-    <button
-      id="adminClose"
-      class="admin-close">
-
-      ×
-
-    </button>
-
-  </div>
-
-
-  <!-- USER -->
-  <div class="admin-card">
-
-    <div class="admin-card-title">
-      Пользователь
-    </div>
-
-
-    <label class="admin-label">
-      Telegram ID
-    </label>
-
-
-    <input
-      id="adminUid"
-      class="admin-input"
-      type="number"
-      placeholder="Например: 123456789">
-
-
-  </div>
-
-
-  <!-- BALANCE -->
-  <div class="admin-card">
-
-    <div class="admin-card-title">
-      Баланс
-    </div>
-
-
-    <label class="admin-label">
-      Сумма
-    </label>
-
-
-    <input
-      id="adminAmount"
-      class="admin-input"
-      type="number"
-      step="0.01"
-      placeholder="1000">
-
-
-    <label class="admin-label">
-      Примечание
-    </label>
-
-
-    <input
-      id="adminNote"
-      class="admin-input"
-      type="text"
-      placeholder="Причина изменения">
-
-
-    <div class="admin-buttons">
-
-      <button
-        id="adminAdd"
-        class="admin-green">
-
-        + Добавить
-
-      </button>
-
-
-      <button
-        id="adminTake"
-        class="admin-red">
-
-        − Снять
-
-      </button>
-
-
-      <button
-        id="adminSet"
-        class="admin-blue">
-
-        = Установить
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- BAN -->
-  <div class="admin-card">
-
-    <div class="admin-card-title">
-      Блокировка
-    </div>
-
-
-    <label class="admin-label">
-      Причина
-    </label>
-
-
-    <input
-      id="adminReason"
-      class="admin-input"
-      type="text"
-      placeholder="Причина блокировки">
-
-
-    <div class="admin-buttons">
-
-      <button
-        id="adminBan"
-        class="admin-red">
-
-        Заблокировать
-
-      </button>
-
-
-      <button
-        id="adminUnban"
-        class="admin-green">
-
-        Разблокировать
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- APPEALS -->
-  <div class="admin-card">
-
-    <div class="admin-card-title">
-      Обращения
-    </div>
-
-
-    <div id="appealsList">
-
-      <div class="empty">
-        Загрузка...
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- SELECTED APPEAL -->
-  <div
-    id="adminAppealView"
-    class="admin-card"
-    style="display:none;">
-
-    <div
-      id="adminAppealInfo"
-      class="admin-card-title">
-    </div>
-
-
-    <div
-      id="adminAppealText"
-      class="admin-appeal-text">
-    </div>
-
-
-    <div class="admin-buttons">
-
-      <button
-        id="acceptAppeal"
-        class="admin-green">
-
-        Принять
-
-      </button>
-
-
-      <button
-        id="rejectAppeal"
-        class="admin-red">
-
-        Отклонить
-
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
+</div>
 
 
 <script src="app.js"></script>
